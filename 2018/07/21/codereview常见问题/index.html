@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta name=referrer content=never>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>codereview常见问题 | 用友友云音前端技术团队</title>
+  <meta name="description" content="路线图 常见代码问题常见的潜在代码问题是当前直接会导致BUG、故障或者产品功能不能正常工作的类别。 空值空值是最容易的问题  值为NULL导致空指针异常；  参数字符串含有前导或后缀空格没有Trim导致查询为空。   原则上，对于任何异常， 希望能够打印出具体的错误信息，根据错误信息很快明白是什么原因， 而不是一个 null ，还要在代码里去推敲为什么为空。这样我们必须识别出程序中可能的null，">
+<meta name="keywords" content="笔记,研发管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="codereview常见问题">
+<meta property="og:url" content="http://youyunyin.com/2018/07/21/codereview常见问题/index.html">
+<meta property="og:site_name" content="友云音FED">
+<meta property="og:description" content="路线图 常见代码问题常见的潜在代码问题是当前直接会导致BUG、故障或者产品功能不能正常工作的类别。 空值空值是最容易的问题  值为NULL导致空指针异常；  参数字符串含有前导或后缀空格没有Trim导致查询为空。   原则上，对于任何异常， 希望能够打印出具体的错误信息，根据错误信息很快明白是什么原因， 而不是一个 null ，还要在代码里去推敲为什么为空。这样我们必须识别出程序中可能的null，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://youyunyin.com/images/codereview-problem.png">
+<meta property="og:updated_time" content="2019-01-19T08:20:09.870Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="codereview常见问题">
+<meta name="twitter:description" content="路线图 常见代码问题常见的潜在代码问题是当前直接会导致BUG、故障或者产品功能不能正常工作的类别。 空值空值是最容易的问题  值为NULL导致空指针异常；  参数字符串含有前导或后缀空格没有Trim导致查询为空。   原则上，对于任何异常， 希望能够打印出具体的错误信息，根据错误信息很快明白是什么原因， 而不是一个 null ，还要在代码里去推敲为什么为空。这样我们必须识别出程序中可能的null，">
+<meta name="twitter:image" content="http://youyunyin.com/images/codereview-problem.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://youyunyin.com/2018/07/21/codereview常见问题/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="友云音FED" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://www.youyunyin.com" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">友云音FED</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">用友APM友云音前端技术团队</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京, 中国</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">团队</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-nav">
+          <a href="/nav">
+            
+            <i class="icon icon-eye-fill"></i>
+            
+            <span class="menu-title">导航</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/youyunyin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/">springboot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/web前端/">web前端</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构设计/">架构设计</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/研发工具/">研发工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/研发管理/">研发管理</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/笔记/">笔记</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/D3-js/">D3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DataFace/">DataFace</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Echarts/">Echarts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eclipse/">eclipse</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitpage/">gitpage</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iframe/">iframe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java性能/">java性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qcon/">qcon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/">vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-cli/">vue-cli</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web前端/">web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/保存/">保存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分享/">分享</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端监控/">前端监控</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/可视化/">可视化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图表/">图表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/布局/">布局</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发者大会/">开发者大会</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术图谱/">技术图谱</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/授权方式/">授权方式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境变量/">环境变量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/研发工具/">研发工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/研发管理/">研发管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/页面嵌入/">页面嵌入</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/D3-js/" style="font-size: 13px;">D3.js</a> <a href="/tags/DataFace/" style="font-size: 13px;">DataFace</a> <a href="/tags/Echarts/" style="font-size: 13px;">Echarts</a> <a href="/tags/eclipse/" style="font-size: 13px;">eclipse</a> <a href="/tags/github/" style="font-size: 13px;">github</a> <a href="/tags/gitpage/" style="font-size: 13px;">gitpage</a> <a href="/tags/hexo/" style="font-size: 13.5px;">hexo</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/iframe/" style="font-size: 13px;">iframe</a> <a href="/tags/java/" style="font-size: 13.25px;">java</a> <a href="/tags/java性能/" style="font-size: 13px;">java性能</a> <a href="/tags/mac/" style="font-size: 13.5px;">mac</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/qcon/" style="font-size: 13px;">qcon</a> <a href="/tags/springboot/" style="font-size: 13.25px;">springboot</a> <a href="/tags/vue/" style="font-size: 13px;">vue</a> <a href="/tags/vue-cli/" style="font-size: 13px;">vue-cli</a> <a href="/tags/web前端/" style="font-size: 13.5px;">web前端</a> <a href="/tags/保存/" style="font-size: 13px;">保存</a> <a href="/tags/分享/" style="font-size: 13.25px;">分享</a> <a href="/tags/前端监控/" style="font-size: 13px;">前端监控</a> <a href="/tags/可视化/" style="font-size: 13px;">可视化</a> <a href="/tags/图表/" style="font-size: 13px;">图表</a> <a href="/tags/布局/" style="font-size: 13px;">布局</a> <a href="/tags/开发者大会/" style="font-size: 13px;">开发者大会</a> <a href="/tags/技术图谱/" style="font-size: 13.25px;">技术图谱</a> <a href="/tags/授权方式/" style="font-size: 13px;">授权方式</a> <a href="/tags/环境变量/" style="font-size: 13px;">环境变量</a> <a href="/tags/研发工具/" style="font-size: 13.25px;">研发工具</a> <a href="/tags/研发管理/" style="font-size: 13.75px;">研发管理</a> <a href="/tags/笔记/" style="font-size: 14px;">笔记</a> <a href="/tags/设计模式/" style="font-size: 13px;">设计模式</a> <a href="/tags/页面嵌入/" style="font-size: 13px;">页面嵌入</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/01/17/命令中的-和/" class="title">&#39;命令中的-和--&#39;</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-01-17T05:56:23.000Z" itemprop="datePublished">2019-01-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/01/14/js探针安装说明/" class="title">js探针安装说明</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-01-14T07:43:35.000Z" itemprop="datePublished">2019-01-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/博客/">博客</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/12/06/图表最终形态/" class="title">图表最终形态</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-12-05T16:00:00.000Z" itemprop="datePublished">2018-12-06</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/web前端/">web前端</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/11/24/web全栈技术图谱v1-1/" class="title">web全栈技术图谱v1.1</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-11-23T16:00:00.000Z" itemprop="datePublished">2018-11-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/笔记/">笔记</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/11/13/ReactiveX-的理念和特点/" class="title">ReactiveX 的理念和特点</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-11-12T16:00:00.000Z" itemprop="datePublished">2018-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-codereview常见问题" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      codereview常见问题
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/07/21/codereview常见问题/" class="article-date">
+	  <time datetime="2018-07-20T16:00:00.000Z" itemprop="datePublished">2018-07-21</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/研发管理/">研发管理</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/研发管理/">研发管理</a>, <a class="article-tag-link" href="/tags/笔记/">笔记</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/07/21/codereview常见问题/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="路线图"><a href="#路线图" class="headerlink" title="路线图"></a>路线图</h1><p><img src="/images/codereview-problem.png" alt=""></p>
+<h1 id="常见代码问题"><a href="#常见代码问题" class="headerlink" title="常见代码问题"></a>常见代码问题</h1><p>常见的潜在代码问题是当前直接会导致BUG、故障或者产品功能不能正常工作的类别。</p>
+<h2 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h2><p>空值是最容易的问题</p>
+<ul>
+<li>值为NULL导致空指针异常； </li>
+<li>参数字符串含有前导或后缀空格没有Trim导致查询为空。 </li>
+</ul>
+<p>原则上，对于任何异常， 希望能够打印出具体的错误信息，根据错误信息很快明白是什么原因， 而不是一个 null ，还要在代码里去推敲为什么为空。这样我们必须识别出程序中可能的null， 并及时检测、捕获和抛出异常。</p>
+<p>对于空值，最好的防护是“防御式编程”。当获取到对象之后， 使用之前总是判断是否为空，并适当抛出异常、打错误日志或做其它处理。 有的人嫌检测为空的 if 语句充斥在代码里会破坏代码的可维护性， 对此我的建议是：</p>
+<p>空值检测一定要有， 有胜于无。<br>在空值检测总是存在的前提下， 可以优化空值检测的方法和存在形式。 比如集中于一个类 NullChecker 中管理，并与系统的整体错误处理设计保持一致。集中管理和处理一致性原则可以作为系统设计的一个准则。 这样主流程中只要增加一行调用即可， 既可以天网恢恢疏而不漏地检测对象为空， 也不会让代码显得难看。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NullChecker</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">checkNull</span><span class="params">(Object obj, Error error)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj == <span class="keyword">null</span>)  &#123; <span class="keyword">throw</span> <span class="keyword">new</span> BizException(error); &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在参数入口处统一做 trim。 如果在业务逻辑里做 trim ， 就会导致有的业务逻辑做了 trim ， 有的没做， 体现在产品上就会有令用户困惑的事情发生。 比如搜索和导出业务， 搜索能搜索出来， 导出却没有。</p>
+<h2 id="未捕获潜在的异常"><a href="#未捕获潜在的异常" class="headerlink" title="未捕获潜在的异常"></a>未捕获潜在的异常</h2><p>第二个容易出错的地方是未捕获潜在的异常。调用API接口、库函数或系统服务等，只顾着享受便利却不做防护，常导致因为局部失败而影响整体的功能。最好的防护依然是“防御式编程”。 要么在当前方法捕获异常并返回合适的空值或空对象，要么抛给高层处理。</p>
+<p>切不可默默”吞掉错误和异常”。 如果这样做了， 出问题了等着加班和耗费大量脑细胞吧！<br>在CodeReview的时候一定要仔细询问：这里是否可能会抛出异常？如果抛异常会怎么处理？是否会影响整体服务和返回结果？</p>
+<h2 id="低性能"><a href="#低性能" class="headerlink" title="低性能"></a>低性能</h2><p>低性能会导致产品功能不好用、不可用，甚至导致产品失败。</p>
+<p>常见情况有：</p>
+<ol>
+<li>循环地逐个调用单个接口获取数据或访问数据库; </li>
+<li>重复创建几乎完全相同的(开销大的)对象；</li>
+<li>数据库访问、网络调用等服务未处理超时的情况； </li>
+<li>多重循环对于大数据量处理的算法性能低；</li>
+<li>大量字符串拼接时使用了String而非StringBuilder.</li>
+</ol>
+<p>处理建议</p>
+<ol>
+<li>最好提供批量接口或批量并发获取数据； </li>
+<li>将可复用对象抽离出循环，一次创建多次使用；</li>
+<li>设置合理的超时时间并捕获超时异常处理； </li>
+<li>使用预排序或预处理， 构造合适的数据结构， 使得算法平均性能在 O(n) 或 O(nlogn) ； </li>
+<li>少量字符串拼接使用String, 大量字符串拼接使用 StringBuilder， 通常不会使用到 StringBuffer.</li>
+</ol>
+<h2 id="影响范围过大"><a href="#影响范围过大" class="headerlink" title="影响范围过大"></a>影响范围过大</h2><p>对多个模块依赖的公共函数的修改，容易造成影响范围超过当前业务改动，无意识地破坏依赖于该公共函数的其他业务。要特别慎重。可靠的方式是：先查看该公共函数的调用， 如果只有自己的业务用，可适当大胆一些； 如果有多个地方依赖，抽离一个新的函数，抽离原函数里的可复用部分，然后基于可复用部分构建新的函数。修改原则遵循“开闭”原则，才能尽可能使改动影响降低到最小化。</p>
+<p>基类及实例字段和方法也属于公共函数的范畴。 尽量不要修改基类的东西。</p>
+<h2 id="单测问题"><a href="#单测问题" class="headerlink" title="单测问题"></a>单测问题</h2><p>单测是保证工程质量的第一道重要防线。单测问题一般包括： </p>
+<ul>
+<li>单测未全部通过； </li>
+<li>重要业务逻辑缺乏单测； </li>
+<li>缺乏异常单测； </li>
+<li>代码变更或BUG修复缺乏单测。</li>
+</ul>
+<p>单测全部通过应当是提交代码到代码库以及代码Review的前提条件。代码提交者应当保证单测全部通过。没有捷径可走。仅当单测全部通过才提交到代码库， 可以通过工具自动化实现。 对于 maven 管理的工程， 只需一个命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn test &amp;&amp; git push origin branch_name 。</span><br></pre></td></tr></table></figure></p>
+<p>单测应当更注重质，而非单纯追求覆盖率。</p>
+<p>缺乏单测的重要业务逻辑就像裸露在空气中的电线一样，虽然能跑起来，却是很容易“触电”的。 方法： 增加覆盖比较全面的单测。</p>
+<p>缺乏异常单测也是代码提交者常忽略的问题。 异常也是一种实际的业务场景，反映系统的健壮性和友好性。异常应该有相应的单元测试覆盖。创建条件使之抛出异常，并判断异常是否是指定异常；若没有抛出异常或者不是指定异常，则应该 AssertFailed 而不是通过。</p>
+<p>对于代码变更和BUG修复，如果当时由于时间紧而没有写，后续应当补上。对于每个代码变更和BUG，都可以抽离出相应的代码部分， 并有相应单测覆盖，并注明原因。</p>
+<h2 id="与原有业务逻辑不兼容"><a href="#与原有业务逻辑不兼容" class="headerlink" title="与原有业务逻辑不兼容"></a>与原有业务逻辑不兼容</h2><p>改动针对当前需求是合理的，却与原有业务逻辑不兼容，也是常见的问题。比如增加一个搜索条件， 却不能与原有条件联合查询。</p>
+<p>与原有业务不兼容， 一般出现在：</p>
+<p>一对一与一对多的变化。 比如原来的关系是一个订单对应一个物流信息， 后来变化为一个订单可能对应多个物流信息； 原来的逻辑是一个订单显示多个物流信息可以更改，后来要求一个订单只展示最近一次的物流信息可以修改。<br>多个业务组合。 业务 A 与业务 B 原来是分开发展的， 后来开展一种活动，将业务A与业务B进行一种组合营销。 此时，多半会出现很多 if-else 语句。</p>
+<p>业务逻辑的兼容问题一般体现在系统的复用性和可扩展机制上。良好的系统可复用性和可扩展性可以更容易地做到业务逻辑兼容。 主要有如下几种级别：</p>
+<p>自动兼容。 增加一种类型， 只是 biz_type 的值多了一种， 系统自动将已有功能适配给新的 biz_type；<br>一点改动。增加一个分支语句， 对 biz_type 的某个特性进行扩展；<br>一些改动。 需要见缝插针地增加一个单独的分支判断和逻辑处理模块， 对整体可扩展性没有影响， 但会造成局部的复杂化；<br>一部分功能改动。 只需要对其中一个功能模块做个扩展；<br>多处改动。 需要对多个功能模块做相应的改造，不过更多是新增而不是修改；<br>难以改动。 需要深入到功能模块内部做艰难的修改， 并要保证原有功能不受影响。</p>
+<p>如何应对呢？</p>
+<p>针对关联关系， 在项目之初， 可以询问清楚： 将来在产品上是否有可扩展的变化？ 及早预留空间， 或者确定产品上的对策； 在代码实现上， 兼顾考虑一对一到一对多，或一对多到一对一的关联变化。比如使用列表来表达单个信息， 使用索引从列表中获取单个信息。<br>针对业务组合， 明确各业务的核心部分， 抽离出业务的可复用的部分，形成 API ； 考虑组合模式和装饰器模式来进行扩展。</p>
+<p>核心不变， 外围定制化。</p>
+<h2 id="缺乏必要日志"><a href="#缺乏必要日志" class="headerlink" title="缺乏必要日志"></a>缺乏必要日志</h2><p>对于重要而关键的实例状态、代码路径及API调用，应当添加适当的INFO日志；对于异常，应当捕获并添加Error日志。缺乏日志并不会影响业务功能，但出现问题排查时，就会非常不方便，甚至错失极宝贵的机会(不易重现的情况尤其如此)。此外，缺乏日志也会导致可控性差，难以做数据统计和分析。</p>
+<h2 id="错误码不符合规范"><a href="#错误码不符合规范" class="headerlink" title="错误码不符合规范"></a>错误码不符合规范</h2><p>错误码本身不算是代码问题，不过基于整个组织和工程的可维护性来说，可以将错误码不符合规范作为一种错误加以避免。方法： 对错误码进行可控的管理和遵循规范使用。可以使用公共文档维护， 也可以开发错误码管理系统来避免相同的错误码。</p>
+<h2 id="参数检测缺乏或不足"><a href="#参数检测缺乏或不足" class="headerlink" title="参数检测缺乏或不足"></a>参数检测缺乏或不足</h2><p>参数检测是对业务处理的第一层重要过滤。如果参数检测不足够，就会导致脏数据进入服务处理，轻则导致异常，重则插入脏数据到数据库，对后续维护都会造成很多维护成本。方法： 采用“契约式编程”，规定前置条件，并使用单测进行覆盖。</p>
+<p>对于复杂的业务应用， 优雅的参数检测处理尤为重要。 根据 “集中管理和处理一致性原则”， 可以建立一个 paramchecker 包， 设计一个可复用的微框架来对应用中所有的参数进行统一集中化检测。参数检测主要包括： (1) 参数的值类型， 可以根据不同值类型做基础的检测； (2) 参数的业务类型， 有基础非业务参数， 基础业务参数和具体业务参数。 不同的参数业务类型有不同的处理。 将参数值类型与参数业务类型结合起来， 结合一致性的异常捕获处理， 就可以实现一个可复用的参数检测框架。参数检测既可以采用普通的分支语句，也可以采用注解方式。采用注解方式更可读，不过单测编写更具技巧。</p>
+<h2 id="引用错误"><a href="#引用错误" class="headerlink" title="引用错误"></a>引用错误</h2><p>对于动态语言， 由于缺乏强大的静态代码检测，修改了类引用的地方尤其要注意，很可能导致依赖的其他业务出错； 尤其是修改重名引用时。有线上故障教训。PHP工程中含有两个 Format 类， 一个基础的一个业务相关的， 被改动的类文件里开始没有指明引用，默认采用了基础 Format 类的实现， 然后提交者在改动文件头增加了对业务 Format 的引用， 导致依赖于基础Format类的其他业务不能正常工作。避免引用错误的方法： 当要在文件里增加新的类引用时， 先在文件里搜索是否有重名类的引用。如果有， 就要格外小心了。</p>
+<h2 id="细节错误"><a href="#细节错误" class="headerlink" title="细节错误"></a>细节错误</h2><p>比如数组越界、JSON解析出错、函数参数传递出错、API 版本不对、使用网上拷贝的未经测试的代码、不成熟的算法、传值与传引用、相等性比较等。</p>
+<p>对于数组越界错误， 通常要对空数组、针对数组大小的边界值+1和-1写单测来避免； 使用网上拷贝的代码，诚然可节省时间，也一定要加工一下并用单测覆盖； 传值和传引用可通过单测来避免错误； 对象的相等性比较切忌使用等号=。</p>
+<h2 id="多重条件"><a href="#多重条件" class="headerlink" title="多重条件"></a>多重条件</h2><p>类似 if ((!A || !B) &amp;&amp; C || (D &amp;&amp; E)) 的多重条件要仔细推敲。方法： 最好拆分成多个有含义变量。 isNotDelay = !A || !B ; isNormal = C ; isAllow = D &amp;&amp; E ; cond = isNotDelay &amp;&amp; isNormal || isAllow 。</p>
+<h2 id="文不符实"><a href="#文不符实" class="headerlink" title="文不符实"></a>文不符实</h2><p>文不符实是一种可能导致线上故障的错误。比如一个 getXXX 的函数，结果里面还做了 add, update 的操作。对问题排查、产品运维等都有非常大的杀伤力。因此命名一定要用实质内容相符，除非是故意搞破坏。</p>
+<h2 id="跨语言或跨系统交互"><a href="#跨语言或跨系统交互" class="headerlink" title="跨语言或跨系统交互"></a>跨语言或跨系统交互</h2><p>稍具规模的互联网创业公司通常会采用多语言开发，比如PHP作为前端，Java作为后台服务。当动态类型语言与静态类型语言交互时，会有一些问题产生。比如PHP的对象通常是一个Map, 如果是空对象就会写成 [], 然而 [] 会被 Java 解析成列表。这样， 如果数据库的值是通过 PHP 写入，那么这个值既有可能是JSON对象字符串，也可能是空数组字符串， Java 来解析就有点尴尬了。 同样，当 Java 调用 PHP 接口时， 不规范的PHP接口既可能返回列表，也可能返回 true or false ， Java 解析返回结果也会比较尴尬。 因此， 在跨语言交互的边界处，要特别注意这些类型转换的差异。</p>
+<p>跨系统交互则主要是接口设计与约定的问题。同一个项目里不同业务团队之间的业务接口设计与约定， 不同企业里开放接口的设计与约定， 要在最初深思熟虑，一旦开放，在后期很少有接口设计改动的空间。开放接口设计要符合小而美、正交的特性， 命名要贴切一致， 参数取值要指明约束，枚举参数要给出列表， 结果返回要规范一致，可以采用通用的 {“code”:200, “msg”: “success”, “data”: xxx} 。跨系统交互也要统一对术语和接口的理解的一致。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://youyunyin.com/2018/07/21/codereview常见问题/" title="codereview常见问题" target="_blank" rel="external">http://youyunyin.com/2018/07/21/codereview常见问题/</a>
+    </li>
+    
+    
+      <li class="post-copyright-license">
+        <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+      </li>
+    
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://www.youyunyin.com" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://www.youyunyin.com" target="_blank"><span class="text-dark">友云音FED</span><small class="ml-1x">用友APM友云音前端技术团队</small></a></h3>
+        <div>用友APM友云音前端技术团队</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      
+
+    
+   
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2018/10/01/markdown/" title="markdown常用语法"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2018/01/11/MAC破解安装IntelliJ-IDEA方法/" title="MAC破解安装IntelliJ IDEA方法"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,wechat" data-mobile-sites="weibo,wechat"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/youyunyin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 youyunyin
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> -->
+<!-- <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+    <!-- <link href="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css" rel="stylesheet"> -->
+    <!-- <script src="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js"></script> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.js"></script>
+    <script>
+        //利用 FancyBox 实现点击图片放大
+        $(document).ready(function() {
+            $('article img').not('[hidden]').not('.panel-body img').each(function () {
+                var $image = $(this);
+                var imageCaption = $image.attr('alt');
+                var $imageWrapLink = $image.parent('a');
+                if ($imageWrapLink.length < 1) {
+                var src = this.getAttribute('src');
+                var idx = src.lastIndexOf('?');
+                if (idx != -1) {
+                    src = src.substring(0, idx);
+                }
+                $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+                }
+                $imageWrapLink.attr('data-fancybox', 'images');
+                if (imageCaption) {
+                $imageWrapLink.attr('data-caption', imageCaption);
+                }
+            });
+            $().fancybox({
+                selector: '[data-fancybox="images"]',
+                hash: false,
+                loop: false,
+            }); 
+        });
+    </script>
+    
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+
+
+    
+    
+        
+    
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js"></script>
+    <script type="text/javascript">
+        var gitalk = new Gitalk({
+            clientID: 'c7ebd7a808368f59044a',
+            clientSecret: 'c6d704f7a1e8a0b237f3ace7fda18801d8ab8d39',
+            repo: 'youyunyin.github.io',
+            owner: 'youyunyin',
+            admin: ['youyunyin'],
+            id: md5(location.pathname),
+            distractionFreeMode: true
+        })
+        gitalk.render('comments')
+    </script>
+    
+
+    
+    
+
+
+
+</body>
+</html>

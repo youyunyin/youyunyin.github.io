@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta name=referrer content=never>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>设计模式-极简笔记-6大设计原则 | 用友友云音前端技术团队</title>
+  <meta name="description" content="通过尽量少的语言描述设计模式的相关概念如果想要更详细的描述可参看设计模式其他相关书籍或者资料 6大设计原则单一职责原则英文名称：Single Responsibiity Principle 简称：SRP定义：在定义接口的时候，接口的功能要单一。该原则素来有很多的争议，因为这个原则在实际开发过程中很难界定功能范围，所以需要根据实际情况使用，不要生搬硬套。 里氏替换原则英文名称：Liskov Subs">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式-极简笔记-6大设计原则">
+<meta property="og:url" content="http://youyunyin.com/2017/10/13/设计模式-极简笔记-6大设计原则/index.html">
+<meta property="og:site_name" content="友云音FED">
+<meta property="og:description" content="通过尽量少的语言描述设计模式的相关概念如果想要更详细的描述可参看设计模式其他相关书籍或者资料 6大设计原则单一职责原则英文名称：Single Responsibiity Principle 简称：SRP定义：在定义接口的时候，接口的功能要单一。该原则素来有很多的争议，因为这个原则在实际开发过程中很难界定功能范围，所以需要根据实际情况使用，不要生搬硬套。 里氏替换原则英文名称：Liskov Subs">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-01-19T08:20:09.879Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式-极简笔记-6大设计原则">
+<meta name="twitter:description" content="通过尽量少的语言描述设计模式的相关概念如果想要更详细的描述可参看设计模式其他相关书籍或者资料 6大设计原则单一职责原则英文名称：Single Responsibiity Principle 简称：SRP定义：在定义接口的时候，接口的功能要单一。该原则素来有很多的争议，因为这个原则在实际开发过程中很难界定功能范围，所以需要根据实际情况使用，不要生搬硬套。 里氏替换原则英文名称：Liskov Subs">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://youyunyin.com/2017/10/13/设计模式-极简笔记-6大设计原则/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="友云音FED" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://www.youyunyin.com" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">友云音FED</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">用友APM友云音前端技术团队</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京, 中国</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">团队</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-nav">
+          <a href="/nav">
+            
+            <i class="icon icon-eye-fill"></i>
+            
+            <span class="menu-title">导航</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/youyunyin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/">springboot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/web前端/">web前端</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构设计/">架构设计</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/研发工具/">研发工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/研发管理/">研发管理</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/笔记/">笔记</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/D3-js/">D3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DataFace/">DataFace</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Echarts/">Echarts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eclipse/">eclipse</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitpage/">gitpage</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iframe/">iframe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java性能/">java性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qcon/">qcon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/">vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-cli/">vue-cli</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web前端/">web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/保存/">保存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分享/">分享</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端监控/">前端监控</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/可视化/">可视化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图表/">图表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/布局/">布局</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发者大会/">开发者大会</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术图谱/">技术图谱</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/授权方式/">授权方式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境变量/">环境变量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/研发工具/">研发工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/研发管理/">研发管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/页面嵌入/">页面嵌入</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/D3-js/" style="font-size: 13px;">D3.js</a> <a href="/tags/DataFace/" style="font-size: 13px;">DataFace</a> <a href="/tags/Echarts/" style="font-size: 13px;">Echarts</a> <a href="/tags/eclipse/" style="font-size: 13px;">eclipse</a> <a href="/tags/github/" style="font-size: 13px;">github</a> <a href="/tags/gitpage/" style="font-size: 13px;">gitpage</a> <a href="/tags/hexo/" style="font-size: 13.5px;">hexo</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/iframe/" style="font-size: 13px;">iframe</a> <a href="/tags/java/" style="font-size: 13.25px;">java</a> <a href="/tags/java性能/" style="font-size: 13px;">java性能</a> <a href="/tags/mac/" style="font-size: 13.5px;">mac</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/qcon/" style="font-size: 13px;">qcon</a> <a href="/tags/springboot/" style="font-size: 13.25px;">springboot</a> <a href="/tags/vue/" style="font-size: 13px;">vue</a> <a href="/tags/vue-cli/" style="font-size: 13px;">vue-cli</a> <a href="/tags/web前端/" style="font-size: 13.5px;">web前端</a> <a href="/tags/保存/" style="font-size: 13px;">保存</a> <a href="/tags/分享/" style="font-size: 13.25px;">分享</a> <a href="/tags/前端监控/" style="font-size: 13px;">前端监控</a> <a href="/tags/可视化/" style="font-size: 13px;">可视化</a> <a href="/tags/图表/" style="font-size: 13px;">图表</a> <a href="/tags/布局/" style="font-size: 13px;">布局</a> <a href="/tags/开发者大会/" style="font-size: 13px;">开发者大会</a> <a href="/tags/技术图谱/" style="font-size: 13.25px;">技术图谱</a> <a href="/tags/授权方式/" style="font-size: 13px;">授权方式</a> <a href="/tags/环境变量/" style="font-size: 13px;">环境变量</a> <a href="/tags/研发工具/" style="font-size: 13.25px;">研发工具</a> <a href="/tags/研发管理/" style="font-size: 13.75px;">研发管理</a> <a href="/tags/笔记/" style="font-size: 14px;">笔记</a> <a href="/tags/设计模式/" style="font-size: 13px;">设计模式</a> <a href="/tags/页面嵌入/" style="font-size: 13px;">页面嵌入</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/01/17/命令中的-和/" class="title">&#39;命令中的-和--&#39;</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-01-17T05:56:23.000Z" itemprop="datePublished">2019-01-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/01/14/js探针安装说明/" class="title">js探针安装说明</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-01-14T07:43:35.000Z" itemprop="datePublished">2019-01-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/博客/">博客</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/12/06/图表最终形态/" class="title">图表最终形态</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-12-05T16:00:00.000Z" itemprop="datePublished">2018-12-06</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/web前端/">web前端</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/11/24/web全栈技术图谱v1-1/" class="title">web全栈技术图谱v1.1</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-11-23T16:00:00.000Z" itemprop="datePublished">2018-11-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/笔记/">笔记</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/11/13/ReactiveX-的理念和特点/" class="title">ReactiveX 的理念和特点</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-11-12T16:00:00.000Z" itemprop="datePublished">2018-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-设计模式-极简笔记-6大设计原则" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      设计模式-极简笔记-6大设计原则
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2017/10/13/设计模式-极简笔记-6大设计原则/" class="article-date">
+	  <time datetime="2017-10-12T16:00:00.000Z" itemprop="datePublished">2017-10-13</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/架构设计/">架构设计</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/设计模式/">设计模式</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2017/10/13/设计模式-极简笔记-6大设计原则/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>通过尽量少的语言描述设计模式的相关概念<br>如果想要更详细的描述可参看设计模式其他相关书籍或者资料</p>
+<h1 id="6大设计原则"><a href="#6大设计原则" class="headerlink" title="6大设计原则"></a>6大设计原则</h1><h2 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h2><p>英文名称：Single Responsibiity Principle 简称：SRP<br>定义：在定义接口的时候，接口的功能要单一。<br>该原则素来有很多的争议，因为这个原则在实际开发过程中很难界定功能范围，所以需要根据实际情况使用，不要生搬硬套。</p>
+<h2 id="里氏替换原则"><a href="#里氏替换原则" class="headerlink" title="里氏替换原则"></a>里氏替换原则</h2><p>英文名称：Liskov Substitution Principle 简称：LSP<br>通俗定义：只要父类能出现的地方子类就可以出现，而且替换为子类不会产生任何错误或异常<br>该原则主要为继承定义一个规范，子类尽量不要出现父类不存在的方法或属性</p>
+<h2 id="依赖倒置原则"><a href="#依赖倒置原则" class="headerlink" title="依赖倒置原则"></a>依赖倒置原则</h2><p>英文名称：Dependence Inversion Principle 简称：DIP<br>通俗定义：通常依赖都是指的具体实现类的依赖和耦合，这里倒置就是要把依赖放到接口层。具体的实现类之间不存在依赖，实现类只是依赖他们的接口。<br>该原则就是经常谈到的面向接口编程</p>
+<h2 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h2><p>英文名称：Interface Segregation Principle 简称：ISP<br>通俗定义：客户端不应该依赖它不需要的接口，一个类对另一个类的依赖应该建立在最小的接口上。<br>该原则规范了我们对外提供接口时的一个规范，对外提供接口时，只提供需要的接口。<br>比如：提供通过姓名查询用户信息的接口，就提供queryByName(String name),而不是提供一个通用query(String queryParam)，约定参数为{“name”:张三}这样的形式。</p>
+<h2 id="迪米特法则"><a href="#迪米特法则" class="headerlink" title="迪米特法则"></a>迪米特法则</h2><p>英文名称：Law of Demeter 简称：LOD<br>或<br>英文名称：Least Knowledge Principle 简称：LKP<br>本人喜欢第二个描述。<br>通俗定义：一个类再调用其他类或者接口的时候应该对该类有最少的了解，只要知道该接口能实现什么功能即可，至于如何实现，以及过程都不需要关心。</p>
+<h2 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h2><p>英文名称：Open Closed Principle 简称：OCP<br>通俗定义：一个接口，类，模块的定义应该对扩展开放，对修改关闭<br>该原则规范我们在开发过程中尽量通过扩展的方式来实现新的功能或者变化，而不是去修改原有逻辑或者接口</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://youyunyin.com/2017/10/13/设计模式-极简笔记-6大设计原则/" title="设计模式-极简笔记-6大设计原则" target="_blank" rel="external">http://youyunyin.com/2017/10/13/设计模式-极简笔记-6大设计原则/</a>
+    </li>
+    
+    
+      <li class="post-copyright-license">
+        <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+      </li>
+    
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://www.youyunyin.com" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://www.youyunyin.com" target="_blank"><span class="text-dark">友云音FED</span><small class="ml-1x">用友APM友云音前端技术团队</small></a></h3>
+        <div>用友APM友云音前端技术团队</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      
+
+    
+   
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2017/11/24/SpringBoot入门环境搭建，maven构建，Intellij-IDEA-2016-2/" title="SpringBoot入门环境搭建，maven构建，Intellij IDEA 2016.2"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2017/09/24/mac中配置eclipse启动使用的jdk，eclipse-ini文件/" title="mac中配置eclipse启动使用的jdk，eclipse.ini文件"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,wechat" data-mobile-sites="weibo,wechat"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/youyunyin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 youyunyin
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> -->
+<!-- <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+    <!-- <link href="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css" rel="stylesheet"> -->
+    <!-- <script src="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js"></script> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.js"></script>
+    <script>
+        //利用 FancyBox 实现点击图片放大
+        $(document).ready(function() {
+            $('article img').not('[hidden]').not('.panel-body img').each(function () {
+                var $image = $(this);
+                var imageCaption = $image.attr('alt');
+                var $imageWrapLink = $image.parent('a');
+                if ($imageWrapLink.length < 1) {
+                var src = this.getAttribute('src');
+                var idx = src.lastIndexOf('?');
+                if (idx != -1) {
+                    src = src.substring(0, idx);
+                }
+                $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+                }
+                $imageWrapLink.attr('data-fancybox', 'images');
+                if (imageCaption) {
+                $imageWrapLink.attr('data-caption', imageCaption);
+                }
+            });
+            $().fancybox({
+                selector: '[data-fancybox="images"]',
+                hash: false,
+                loop: false,
+            }); 
+        });
+    </script>
+    
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+
+
+    
+    
+        
+    
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js"></script>
+    <script type="text/javascript">
+        var gitalk = new Gitalk({
+            clientID: 'c7ebd7a808368f59044a',
+            clientSecret: 'c6d704f7a1e8a0b237f3ace7fda18801d8ab8d39',
+            repo: 'youyunyin.github.io',
+            owner: 'youyunyin',
+            admin: ['youyunyin'],
+            id: md5(location.pathname),
+            distractionFreeMode: true
+        })
+        gitalk.render('comments')
+    </script>
+    
+
+    
+    
+
+
+
+</body>
+</html>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta name=referrer content=never>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>图表最终形态 | 用友友云音前端技术团队</title>
+  <meta name="description" content="图表最终形态常用的图表形态常用的网页图表的展示形态一般为不含数据的html，通过ajax请求数据展示；在服务端渲染的页面/应用有含数据html方式图表的客户端的下载方式有pdf、图片两种，导出为html基本没有，操作查看也不方便下面对几种图表形态试用场景和优劣进行一下简单分析  不含数据html  通过ajax请求数据，然后通过html和js进行页面的渲染和交互是现在页面的主要方式。页面中图表主要">
+<meta name="keywords" content="hexo,分享,图表,保存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图表最终形态">
+<meta property="og:url" content="http://youyunyin.com/2018/12/06/图表最终形态/index.html">
+<meta property="og:site_name" content="友云音FED">
+<meta property="og:description" content="图表最终形态常用的图表形态常用的网页图表的展示形态一般为不含数据的html，通过ajax请求数据展示；在服务端渲染的页面/应用有含数据html方式图表的客户端的下载方式有pdf、图片两种，导出为html基本没有，操作查看也不方便下面对几种图表形态试用场景和优劣进行一下简单分析  不含数据html  通过ajax请求数据，然后通过html和js进行页面的渲染和交互是现在页面的主要方式。页面中图表主要">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-01-19T08:20:09.872Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图表最终形态">
+<meta name="twitter:description" content="图表最终形态常用的图表形态常用的网页图表的展示形态一般为不含数据的html，通过ajax请求数据展示；在服务端渲染的页面/应用有含数据html方式图表的客户端的下载方式有pdf、图片两种，导出为html基本没有，操作查看也不方便下面对几种图表形态试用场景和优劣进行一下简单分析  不含数据html  通过ajax请求数据，然后通过html和js进行页面的渲染和交互是现在页面的主要方式。页面中图表主要">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://youyunyin.com/2018/12/06/图表最终形态/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="友云音FED" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://www.youyunyin.com" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">友云音FED</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">用友APM友云音前端技术团队</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京, 中国</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">团队</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-nav">
+          <a href="/nav">
+            
+            <i class="icon icon-eye-fill"></i>
+            
+            <span class="menu-title">导航</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/youyunyin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/">springboot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/web前端/">web前端</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构设计/">架构设计</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/研发工具/">研发工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/研发管理/">研发管理</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/笔记/">笔记</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/D3-js/">D3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DataFace/">DataFace</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Echarts/">Echarts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eclipse/">eclipse</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitpage/">gitpage</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iframe/">iframe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java性能/">java性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qcon/">qcon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/">vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-cli/">vue-cli</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web前端/">web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/保存/">保存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分享/">分享</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端监控/">前端监控</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/可视化/">可视化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图表/">图表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/布局/">布局</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发者大会/">开发者大会</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术图谱/">技术图谱</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/授权方式/">授权方式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境变量/">环境变量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/研发工具/">研发工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/研发管理/">研发管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/页面嵌入/">页面嵌入</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/D3-js/" style="font-size: 13px;">D3.js</a> <a href="/tags/DataFace/" style="font-size: 13px;">DataFace</a> <a href="/tags/Echarts/" style="font-size: 13px;">Echarts</a> <a href="/tags/eclipse/" style="font-size: 13px;">eclipse</a> <a href="/tags/github/" style="font-size: 13px;">github</a> <a href="/tags/gitpage/" style="font-size: 13px;">gitpage</a> <a href="/tags/hexo/" style="font-size: 13.5px;">hexo</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/iframe/" style="font-size: 13px;">iframe</a> <a href="/tags/java/" style="font-size: 13.25px;">java</a> <a href="/tags/java性能/" style="font-size: 13px;">java性能</a> <a href="/tags/mac/" style="font-size: 13.5px;">mac</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/qcon/" style="font-size: 13px;">qcon</a> <a href="/tags/springboot/" style="font-size: 13.25px;">springboot</a> <a href="/tags/vue/" style="font-size: 13px;">vue</a> <a href="/tags/vue-cli/" style="font-size: 13px;">vue-cli</a> <a href="/tags/web前端/" style="font-size: 13.5px;">web前端</a> <a href="/tags/保存/" style="font-size: 13px;">保存</a> <a href="/tags/分享/" style="font-size: 13.25px;">分享</a> <a href="/tags/前端监控/" style="font-size: 13px;">前端监控</a> <a href="/tags/可视化/" style="font-size: 13px;">可视化</a> <a href="/tags/图表/" style="font-size: 13px;">图表</a> <a href="/tags/布局/" style="font-size: 13px;">布局</a> <a href="/tags/开发者大会/" style="font-size: 13px;">开发者大会</a> <a href="/tags/技术图谱/" style="font-size: 13.25px;">技术图谱</a> <a href="/tags/授权方式/" style="font-size: 13px;">授权方式</a> <a href="/tags/环境变量/" style="font-size: 13px;">环境变量</a> <a href="/tags/研发工具/" style="font-size: 13.25px;">研发工具</a> <a href="/tags/研发管理/" style="font-size: 13.75px;">研发管理</a> <a href="/tags/笔记/" style="font-size: 14px;">笔记</a> <a href="/tags/设计模式/" style="font-size: 13px;">设计模式</a> <a href="/tags/页面嵌入/" style="font-size: 13px;">页面嵌入</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/01/17/命令中的-和/" class="title">&#39;命令中的-和--&#39;</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-01-17T05:56:23.000Z" itemprop="datePublished">2019-01-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/01/14/js探针安装说明/" class="title">js探针安装说明</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-01-14T07:43:35.000Z" itemprop="datePublished">2019-01-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/博客/">博客</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/12/06/图表最终形态/" class="title">图表最终形态</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-12-05T16:00:00.000Z" itemprop="datePublished">2018-12-06</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/web前端/">web前端</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/11/24/web全栈技术图谱v1-1/" class="title">web全栈技术图谱v1.1</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-11-23T16:00:00.000Z" itemprop="datePublished">2018-11-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/笔记/">笔记</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/11/13/ReactiveX-的理念和特点/" class="title">ReactiveX 的理念和特点</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-11-12T16:00:00.000Z" itemprop="datePublished">2018-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-图表最终形态" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      图表最终形态
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/12/06/图表最终形态/" class="article-date">
+	  <time datetime="2018-12-05T16:00:00.000Z" itemprop="datePublished">2018-12-06</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/博客/">博客</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/hexo/">hexo</a>, <a class="article-tag-link" href="/tags/保存/">保存</a>, <a class="article-tag-link" href="/tags/分享/">分享</a>, <a class="article-tag-link" href="/tags/图表/">图表</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/12/06/图表最终形态/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="图表最终形态"><a href="#图表最终形态" class="headerlink" title="图表最终形态"></a>图表最终形态</h1><h2 id="常用的图表形态"><a href="#常用的图表形态" class="headerlink" title="常用的图表形态"></a>常用的图表形态</h2><p>常用的网页图表的展示形态一般为不含数据的html，通过ajax请求数据展示；<br>在服务端渲染的页面/应用有含数据html方式<br>图表的客户端的下载方式有pdf、图片两种，导出为html基本没有，操作查看也不方便<br>下面对几种图表形态试用场景和优劣进行一下简单分析</p>
+<ol>
+<li>不含数据html</li>
+</ol>
+<p>通过ajax请求数据，然后通过html和js进行页面的渲染和交互是现在页面的主要方式。页面中图表主要也是通过这种方式。</p>
+<p>主要优点有：</p>
+<pre><code>1. 对开发友好。现在主流的前后端分离开发方式图表数据一般由后端提供，图表由前端进行开发，这种方式方便进行解
+耦，只需要定义好接口格式，即可分别开发互不干扰。对于单页面应用匹配度也较好。
+2. 比较灵活。相比数据嵌入页面的方式这种方式进行需求变更是代价更小，不涉及数据修改的地方只需要前端进行修改
+即可。对接口进行代理等统一处理时更方便灵活。
+3. 大部分情况下性能较好，这种方式页面各个部分文件都不是很大，而且页面固定可以充分利用浏览器缓存，多个请求
+数据接口也可以充分利用浏览器多个链接并发请求的优势。但是请求过多也会影响页面性能
+4. 方便接口和页面文件复用
+</code></pre><p>缺点：</p>
+<pre><code>1. 首屏等对页面响应时间要求较高的场景下不太适合。请求html，js之后，重新发起数据请求也需要时间对于页面本身
+不是很大对响应速度要去较高的首屏展示等场景下性能不是很好
+2. 一些情况下需要处理下跨域问题 例如需要从不同地址服务请求数据时
+3. 页面进行本地保存时再次打开基本不能正常显示。请求数据登录失效跨域请求实现等方面的限制
+</code></pre><ol start="2">
+<li>包含数据的html</li>
+</ol>
+<p>优点：</p>
+<pre><code>1. 页面和数据不大时时性能好，甚至html中可以包含样式和数据，只请求html就可以显示
+2. 没有请求跨域问题
+3. 对于最近开始流行的服务端渲染SSR契合度更好（SSR对于解决单页应用首屏慢以及SEO问题有了质的提升）
+4. 页面本地保存时，由于页面包含数据基本上打开保存页面没有问题
+</code></pre><p>缺点：</p>
+<pre><code>1. 对于数据量比较大的页面，数据都放到html中会导致单个文件过大，增加页面加载时间
+2. 需要再web端查询接口并将数据插入生成页面中，增加了复杂度和调试难度
+3. 开发成本增加，不和服务端渲染搭配使用需要额外增加一个中间层处理数据页面中，和SSR一起使用时，需要另外熟悉
+SSR的开发调试技术，SSR相比客户端的单页应用也没有那么成熟
+</code></pre><ol start="3">
+<li>pdf、图片</li>
+</ol>
+<p>pdf和图片由于基本没有交与性，一般只有客户端下载或保存图表时采用这种形式，pdf、图片都可以比较方便的由html转换成对应的格式。<br>pdf进行保存相对来说稍微正式一点，显示的文本可以复制，可以包含一些简单的交互和动画。但是动画和交互部分，大部分导出的插件不支持。<br>图片保存更方便，文件大小也更小，但是图片里面的文字不能复制，动画和交互也没有</p>
+<h2 id="综合分析"><a href="#综合分析" class="headerlink" title="综合分析"></a>综合分析</h2><ol>
+<li>对于页面中图表的形态，结合我们dataFace项目的整体架构来看，首先暂时没有考虑SSR的方式，然后数据查询接口都在云端，接口地址比较集中，使用http代理进行一些处理也比较方便，另一方面dataFace主要是图表的可视化展示，首屏展示时间的要求不是很高，而且主要时间在数据查询的方面。综合考虑页面中图表以不含数据html更加合适。</li>
+<li>图表保存的形态。这部分我们现有是pdf方式，在服务端进行html到pdf的生成，然后客户端进行下载。对于新增dataFace项目，可以考虑pdf和图片都支持的方式，对于整个报告还以pdf的方式，可以考虑客户端页面转pdf的插件，整个报告一方面基本包含了文字，另一方面整个报告查看缩放pdf有更好的效果。对于单个的图表也可以提供图片的下载方式，一般的图表库都提供了生成图片的接口。对于导出成包含数据html方式，不推荐一方面不符合普通人保存习惯，而且需要单独进行开发适配。</li>
+</ol>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://youyunyin.com/2018/12/06/图表最终形态/" title="图表最终形态" target="_blank" rel="external">http://youyunyin.com/2018/12/06/图表最终形态/</a>
+    </li>
+    
+    
+      <li class="post-copyright-license">
+        <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+      </li>
+    
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://www.youyunyin.com" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://www.youyunyin.com" target="_blank"><span class="text-dark">友云音FED</span><small class="ml-1x">用友APM友云音前端技术团队</small></a></h3>
+        <div>用友APM友云音前端技术团队</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      
+
+    
+   
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/01/14/js探针安装说明/" title="js探针安装说明"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2018/11/24/web全栈技术图谱v1-1/" title="web全栈技术图谱v1.1"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,wechat" data-mobile-sites="weibo,wechat"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/youyunyin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 youyunyin
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> -->
+<!-- <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+    <!-- <link href="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css" rel="stylesheet"> -->
+    <!-- <script src="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js"></script> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.js"></script>
+    <script>
+        //利用 FancyBox 实现点击图片放大
+        $(document).ready(function() {
+            $('article img').not('[hidden]').not('.panel-body img').each(function () {
+                var $image = $(this);
+                var imageCaption = $image.attr('alt');
+                var $imageWrapLink = $image.parent('a');
+                if ($imageWrapLink.length < 1) {
+                var src = this.getAttribute('src');
+                var idx = src.lastIndexOf('?');
+                if (idx != -1) {
+                    src = src.substring(0, idx);
+                }
+                $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+                }
+                $imageWrapLink.attr('data-fancybox', 'images');
+                if (imageCaption) {
+                $imageWrapLink.attr('data-caption', imageCaption);
+                }
+            });
+            $().fancybox({
+                selector: '[data-fancybox="images"]',
+                hash: false,
+                loop: false,
+            }); 
+        });
+    </script>
+    
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+
+
+    
+    
+        
+    
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js"></script>
+    <script type="text/javascript">
+        var gitalk = new Gitalk({
+            clientID: 'c7ebd7a808368f59044a',
+            clientSecret: 'c6d704f7a1e8a0b237f3ace7fda18801d8ab8d39',
+            repo: 'youyunyin.github.io',
+            owner: 'youyunyin',
+            admin: ['youyunyin'],
+            id: md5(location.pathname),
+            distractionFreeMode: true
+        })
+        gitalk.render('comments')
+    </script>
+    
+
+    
+    
+
+
+
+</body>
+</html>

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta name=referrer content=never>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Java原生实现分页方案 | 用友友云音前端技术团队</title>
+  <meta name="description" content="两种分页方式 截取lisit 生成特定分页sql（不同数据库分页sql不同）  方案一 截取list截取list，针对后台查询出来的list数据，前台传入当前页currentPage，每页记录数numPerPage,从而计算出当前页的起始和终止下标，截取list返回前台。 实现：  PaginationInfo 分页信息对象 PaginationUtil 分页工具类，传入原始全量list，根据前台">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java原生实现分页方案">
+<meta property="og:url" content="http://youyunyin.com/2015/05/29/java原生实现分页方案/index.html">
+<meta property="og:site_name" content="友云音FED">
+<meta property="og:description" content="两种分页方式 截取lisit 生成特定分页sql（不同数据库分页sql不同）  方案一 截取list截取list，针对后台查询出来的list数据，前台传入当前页currentPage，每页记录数numPerPage,从而计算出当前页的起始和终止下标，截取list返回前台。 实现：  PaginationInfo 分页信息对象 PaginationUtil 分页工具类，传入原始全量list，根据前台">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://youyunyin.com/images/java分页类图.png">
+<meta property="og:updated_time" content="2019-01-19T08:20:09.870Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java原生实现分页方案">
+<meta name="twitter:description" content="两种分页方式 截取lisit 生成特定分页sql（不同数据库分页sql不同）  方案一 截取list截取list，针对后台查询出来的list数据，前台传入当前页currentPage，每页记录数numPerPage,从而计算出当前页的起始和终止下标，截取list返回前台。 实现：  PaginationInfo 分页信息对象 PaginationUtil 分页工具类，传入原始全量list，根据前台">
+<meta name="twitter:image" content="http://youyunyin.com/images/java分页类图.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://youyunyin.com/2015/05/29/java原生实现分页方案/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="友云音FED" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://www.youyunyin.com" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">友云音FED</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">用友APM友云音前端技术团队</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京, 中国</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">团队</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-nav">
+          <a href="/nav">
+            
+            <i class="icon icon-eye-fill"></i>
+            
+            <span class="menu-title">导航</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/youyunyin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/">springboot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/web前端/">web前端</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构设计/">架构设计</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/研发工具/">研发工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/研发管理/">研发管理</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/笔记/">笔记</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/D3-js/">D3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DataFace/">DataFace</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Echarts/">Echarts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eclipse/">eclipse</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitpage/">gitpage</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iframe/">iframe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java性能/">java性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qcon/">qcon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/">vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-cli/">vue-cli</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web前端/">web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/保存/">保存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分享/">分享</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端监控/">前端监控</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/可视化/">可视化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图表/">图表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/布局/">布局</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发者大会/">开发者大会</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术图谱/">技术图谱</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/授权方式/">授权方式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境变量/">环境变量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/研发工具/">研发工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/研发管理/">研发管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/页面嵌入/">页面嵌入</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/D3-js/" style="font-size: 13px;">D3.js</a> <a href="/tags/DataFace/" style="font-size: 13px;">DataFace</a> <a href="/tags/Echarts/" style="font-size: 13px;">Echarts</a> <a href="/tags/eclipse/" style="font-size: 13px;">eclipse</a> <a href="/tags/github/" style="font-size: 13px;">github</a> <a href="/tags/gitpage/" style="font-size: 13px;">gitpage</a> <a href="/tags/hexo/" style="font-size: 13.5px;">hexo</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/iframe/" style="font-size: 13px;">iframe</a> <a href="/tags/java/" style="font-size: 13.25px;">java</a> <a href="/tags/java性能/" style="font-size: 13px;">java性能</a> <a href="/tags/mac/" style="font-size: 13.5px;">mac</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/qcon/" style="font-size: 13px;">qcon</a> <a href="/tags/springboot/" style="font-size: 13.25px;">springboot</a> <a href="/tags/vue/" style="font-size: 13px;">vue</a> <a href="/tags/vue-cli/" style="font-size: 13px;">vue-cli</a> <a href="/tags/web前端/" style="font-size: 13.5px;">web前端</a> <a href="/tags/保存/" style="font-size: 13px;">保存</a> <a href="/tags/分享/" style="font-size: 13.25px;">分享</a> <a href="/tags/前端监控/" style="font-size: 13px;">前端监控</a> <a href="/tags/可视化/" style="font-size: 13px;">可视化</a> <a href="/tags/图表/" style="font-size: 13px;">图表</a> <a href="/tags/布局/" style="font-size: 13px;">布局</a> <a href="/tags/开发者大会/" style="font-size: 13px;">开发者大会</a> <a href="/tags/技术图谱/" style="font-size: 13.25px;">技术图谱</a> <a href="/tags/授权方式/" style="font-size: 13px;">授权方式</a> <a href="/tags/环境变量/" style="font-size: 13px;">环境变量</a> <a href="/tags/研发工具/" style="font-size: 13.25px;">研发工具</a> <a href="/tags/研发管理/" style="font-size: 13.75px;">研发管理</a> <a href="/tags/笔记/" style="font-size: 14px;">笔记</a> <a href="/tags/设计模式/" style="font-size: 13px;">设计模式</a> <a href="/tags/页面嵌入/" style="font-size: 13px;">页面嵌入</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/01/17/命令中的-和/" class="title">&#39;命令中的-和--&#39;</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-01-17T05:56:23.000Z" itemprop="datePublished">2019-01-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/01/14/js探针安装说明/" class="title">js探针安装说明</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-01-14T07:43:35.000Z" itemprop="datePublished">2019-01-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/博客/">博客</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/12/06/图表最终形态/" class="title">图表最终形态</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-12-05T16:00:00.000Z" itemprop="datePublished">2018-12-06</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/web前端/">web前端</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/11/24/web全栈技术图谱v1-1/" class="title">web全栈技术图谱v1.1</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-11-23T16:00:00.000Z" itemprop="datePublished">2018-11-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/笔记/">笔记</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/11/13/ReactiveX-的理念和特点/" class="title">ReactiveX 的理念和特点</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-11-12T16:00:00.000Z" itemprop="datePublished">2018-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-java原生实现分页方案" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java原生实现分页方案
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2015/05/29/java原生实现分页方案/" class="article-date">
+	  <time datetime="2015-05-28T16:00:00.000Z" itemprop="datePublished">2015-05-29</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/java/">java</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2015/05/29/java原生实现分页方案/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="两种分页方式"><a href="#两种分页方式" class="headerlink" title="两种分页方式"></a>两种分页方式</h1><ol>
+<li>截取lisit</li>
+<li>生成特定分页sql（不同数据库分页sql不同）</li>
+</ol>
+<h1 id="方案一-截取list"><a href="#方案一-截取list" class="headerlink" title="方案一 截取list"></a>方案一 截取list</h1><p>截取list，针对后台查询出来的list数据，前台传入当前页currentPage，每页记录数numPerPage,从而计算出当前页的起始和终止下标，截取list返回前台。</p>
+<p>实现：</p>
+<ul>
+<li>PaginationInfo 分页信息对象</li>
+<li>PaginationUtil 分页工具类，传入原始全量list，根据前台传入的页码每页数据量进行截取</li>
+</ul>
+<p>如下关键代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="string">"pagedemo"</span>.equals(action))&#123;</span><br><span class="line"><span class="comment">//每页显示数据条数</span></span><br><span class="line">	<span class="keyword">int</span> numPerPage = <span class="number">5</span>;</span><br><span class="line">	<span class="comment">//要显示的页</span></span><br><span class="line"><span class="keyword">int</span> currentPage = Integer.parseInt((String)request.getParameter(<span class="string">"currentPage"</span>));</span><br><span class="line">	StringBuffer json = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">	List&lt;UserVO&gt; list = <span class="keyword">new</span> ArrayList&lt;UserVO&gt;();</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="comment">//要显示的所有数据</span></span><br><span class="line">		list = userMngService.queryAllUser();</span><br><span class="line">		<span class="comment">//第一种分页方式，先取所有list，然后截取list分页</span></span><br><span class="line">		PaginationUtil&lt;UserVO&gt; paginationUtil = <span class="keyword">new</span> PaginationUtil&lt;UserVO&gt;();</span><br><span class="line">		PaginationInfo&lt;UserVO&gt; paginationInfo = paginationUtil.listDataProcess(list, numPerPage, currentPage);</span><br><span class="line">		<span class="comment">//要显示的数据</span></span><br><span class="line">		list = paginationInfo.getResultList();</span><br><span class="line">		json.append(<span class="string">" &#123;\"total\":"</span>);</span><br><span class="line">		<span class="comment">//数据总数</span></span><br><span class="line">		json.append(paginationInfo.getTotalPages());</span><br><span class="line">		json.append(<span class="string">",\"rows\":[  "</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;list.size();i++)&#123;</span><br><span class="line"></span><br><span class="line">		 . . . . . . </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>步骤：</p>
+<ol>
+<li>获取前台传参数当前页currentPage,</li>
+<li>设置分页规则：每页记录数</li>
+<li>获取要显示的所有数据信息list</li>
+<li>使用工具类PaginationUtil截取list。返回PaginationInfo对象</li>
+</ol>
+<p>PaginationInfo对象中包含了结果relustList<br>页码，总记录数等信息，根据需要取得数据返回json到前台。</p>
+<h1 id="方案二-特定分页sql"><a href="#方案二-特定分页sql" class="headerlink" title="方案二 特定分页sql"></a>方案二 特定分页sql</h1><p><img src="/images/java分页类图.png" alt=""></p>
+<p>在需要进行分页处理的DMO类中使用JdbcPaginationDelegator代理类处理，使用PaginationInfo对象存储数据信息。结果list，总页数等<br>示例:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 查询所有用户信息 分页</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> currentPage	当前页</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> numPerPage	每页显示数据条数</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function">Public PaginationInfo&lt;UserVO&gt; <span class="title">queryUserByPageInfo</span><span class="params">(<span class="keyword">int</span> currentPage,<span class="keyword">int</span> numPerPage)</span></span>&#123;</span><br><span class="line">    。。。。</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>步骤：</strong></p>
+<ol>
+<li><p>创建基本查询sql</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">StringBuffer sql = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">sql.append(<span class="string">"select * from ump_user where dr = ?"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建分页信息对象，分页工具代理，如需sql参数创建sql参数对象SQLParameter，如果没有则传null</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//分页信息</span></span><br><span class="line">PaginationInfo&lt;UserVO&gt; pagenationInfo = <span class="keyword">new</span> PaginationInfo&lt;UserVO&gt;();</span><br><span class="line"><span class="comment">//jdbc分页代理对象</span></span><br><span class="line">JdbcPaginationDelegator&lt;UserVO&gt; delegate = <span class="keyword">new</span> JdbcPaginationDelegator&lt;UserVO&gt;();</span><br><span class="line"><span class="comment">//sql参数信息</span></span><br><span class="line">SQLParameter param = <span class="keyword">new</span> SQLParameter();</span><br><span class="line">param.addParam(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用代理对象初始化分页信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用代理对象初始化分页信息，代理类中会计算总记录数，但是不会执行分页sql，因为很多没有使用元数据没有，vo和数据表的映射</span></span><br><span class="line"><span class="comment">//所以没法自动的将rs生成vo，所以，代理只是生成分页特定数据库的分页sql语句，由调用对象自行执行。</span></span><br><span class="line">pagenationInfo = delegate.initPaginationInfo(sql.toString(), param, currentPage, numPerPage);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行代理类生成的分页SQL</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//执行代理类生成的分页查询sql</span></span><br><span class="line">stmt = conn.prepareStatement(paginationInfo.getPageSql());</span><br><span class="line">stmt.setInt(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">rs = stmt.executeQuery();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="两种方式对比："><a href="#两种方式对比：" class="headerlink" title="两种方式对比："></a>两种方式对比：</h1><p>两种方案的优劣比较明显，截取list每次都要全查出来，如果list的数据量非常大每次全查耗时较多，可考虑方案二，但是，此方案改动的代码量少，只需要在action加几行代码处理即可。</p>
+<p>使用分页sql，方案效率较高，每次只取需要的数据，劣势在于需更改的代码较多，同时如果涉及到多次联查取综合数据的场景则此方案无效，只能使用方案一。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://youyunyin.com/2015/05/29/java原生实现分页方案/" title="Java原生实现分页方案" target="_blank" rel="external">http://youyunyin.com/2015/05/29/java原生实现分页方案/</a>
+    </li>
+    
+    
+      <li class="post-copyright-license">
+        <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+      </li>
+    
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://www.youyunyin.com" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://www.youyunyin.com" target="_blank"><span class="text-dark">友云音FED</span><small class="ml-1x">用友APM友云音前端技术团队</small></a></h3>
+        <div>用友APM友云音前端技术团队</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      
+
+    
+   
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2016/05/24/前端技术选型yyy1/" title="前端技术选型yyy-1.0"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,wechat" data-mobile-sites="weibo,wechat"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/youyunyin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 youyunyin
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> -->
+<!-- <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+    <!-- <link href="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css" rel="stylesheet"> -->
+    <!-- <script src="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js"></script> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.js"></script>
+    <script>
+        //利用 FancyBox 实现点击图片放大
+        $(document).ready(function() {
+            $('article img').not('[hidden]').not('.panel-body img').each(function () {
+                var $image = $(this);
+                var imageCaption = $image.attr('alt');
+                var $imageWrapLink = $image.parent('a');
+                if ($imageWrapLink.length < 1) {
+                var src = this.getAttribute('src');
+                var idx = src.lastIndexOf('?');
+                if (idx != -1) {
+                    src = src.substring(0, idx);
+                }
+                $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+                }
+                $imageWrapLink.attr('data-fancybox', 'images');
+                if (imageCaption) {
+                $imageWrapLink.attr('data-caption', imageCaption);
+                }
+            });
+            $().fancybox({
+                selector: '[data-fancybox="images"]',
+                hash: false,
+                loop: false,
+            }); 
+        });
+    </script>
+    
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+
+
+    
+    
+        
+    
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js"></script>
+    <script type="text/javascript">
+        var gitalk = new Gitalk({
+            clientID: 'c7ebd7a808368f59044a',
+            clientSecret: 'c6d704f7a1e8a0b237f3ace7fda18801d8ab8d39',
+            repo: 'youyunyin.github.io',
+            owner: 'youyunyin',
+            admin: ['youyunyin'],
+            id: md5(location.pathname),
+            distractionFreeMode: true
+        })
+        gitalk.render('comments')
+    </script>
+    
+
+    
+    
+
+
+
+</body>
+</html>

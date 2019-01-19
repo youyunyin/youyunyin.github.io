@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta name=referrer content=never>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>图表分享授权方式 | 用友友云音前端技术团队</title>
+  <meta name="description" content="图表分享授权方式网页上的分享一般都提供公开和私有两种分享方式。  公开分享不需要鉴权，只要有URL都可以打开查看。  私有分享常见的有两种鉴权方式  通过密码鉴权 打开页面后输入密码才能看到内容。例如百度网盘分享功能、网易有数的私有分享 通过token鉴权，通过HMAC算法，，客户端通过以token为key把一些变化的数据（通常是时间戳+一部分传递的数据）按照标准的HAMC算法，以指定的加密算法（">
+<meta name="keywords" content="hexo,分享,授权方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图表分享授权方式">
+<meta property="og:url" content="http://youyunyin.com/2018/11/13/图表分享授权方式/index.html">
+<meta property="og:site_name" content="友云音FED">
+<meta property="og:description" content="图表分享授权方式网页上的分享一般都提供公开和私有两种分享方式。  公开分享不需要鉴权，只要有URL都可以打开查看。  私有分享常见的有两种鉴权方式  通过密码鉴权 打开页面后输入密码才能看到内容。例如百度网盘分享功能、网易有数的私有分享 通过token鉴权，通过HMAC算法，，客户端通过以token为key把一些变化的数据（通常是时间戳+一部分传递的数据）按照标准的HAMC算法，以指定的加密算法（">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-01-19T08:20:09.872Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图表分享授权方式">
+<meta name="twitter:description" content="图表分享授权方式网页上的分享一般都提供公开和私有两种分享方式。  公开分享不需要鉴权，只要有URL都可以打开查看。  私有分享常见的有两种鉴权方式  通过密码鉴权 打开页面后输入密码才能看到内容。例如百度网盘分享功能、网易有数的私有分享 通过token鉴权，通过HMAC算法，，客户端通过以token为key把一些变化的数据（通常是时间戳+一部分传递的数据）按照标准的HAMC算法，以指定的加密算法（">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://youyunyin.com/2018/11/13/图表分享授权方式/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="友云音FED" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://www.youyunyin.com" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">友云音FED</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">用友APM友云音前端技术团队</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 北京, 中国</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">团队</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-nav">
+          <a href="/nav">
+            
+            <i class="icon icon-eye-fill"></i>
+            
+            <span class="menu-title">导航</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/youyunyin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/">springboot</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/web前端/">web前端</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客/">博客</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构设计/">架构设计</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/研发工具/">研发工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/研发管理/">研发管理</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/笔记/">笔记</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/D3-js/">D3.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DataFace/">DataFace</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Echarts/">Echarts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eclipse/">eclipse</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitpage/">gitpage</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iframe/">iframe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java性能/">java性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/qcon/">qcon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/">vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-cli/">vue-cli</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web前端/">web前端</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/保存/">保存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分享/">分享</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端监控/">前端监控</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/可视化/">可视化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图表/">图表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/布局/">布局</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开发者大会/">开发者大会</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术图谱/">技术图谱</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/授权方式/">授权方式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境变量/">环境变量</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/研发工具/">研发工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/研发管理/">研发管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/笔记/">笔记</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/页面嵌入/">页面嵌入</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/D3-js/" style="font-size: 13px;">D3.js</a> <a href="/tags/DataFace/" style="font-size: 13px;">DataFace</a> <a href="/tags/Echarts/" style="font-size: 13px;">Echarts</a> <a href="/tags/eclipse/" style="font-size: 13px;">eclipse</a> <a href="/tags/github/" style="font-size: 13px;">github</a> <a href="/tags/gitpage/" style="font-size: 13px;">gitpage</a> <a href="/tags/hexo/" style="font-size: 13.5px;">hexo</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/iframe/" style="font-size: 13px;">iframe</a> <a href="/tags/java/" style="font-size: 13.25px;">java</a> <a href="/tags/java性能/" style="font-size: 13px;">java性能</a> <a href="/tags/mac/" style="font-size: 13.5px;">mac</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/qcon/" style="font-size: 13px;">qcon</a> <a href="/tags/springboot/" style="font-size: 13.25px;">springboot</a> <a href="/tags/vue/" style="font-size: 13px;">vue</a> <a href="/tags/vue-cli/" style="font-size: 13px;">vue-cli</a> <a href="/tags/web前端/" style="font-size: 13.5px;">web前端</a> <a href="/tags/保存/" style="font-size: 13px;">保存</a> <a href="/tags/分享/" style="font-size: 13.25px;">分享</a> <a href="/tags/前端监控/" style="font-size: 13px;">前端监控</a> <a href="/tags/可视化/" style="font-size: 13px;">可视化</a> <a href="/tags/图表/" style="font-size: 13px;">图表</a> <a href="/tags/布局/" style="font-size: 13px;">布局</a> <a href="/tags/开发者大会/" style="font-size: 13px;">开发者大会</a> <a href="/tags/技术图谱/" style="font-size: 13.25px;">技术图谱</a> <a href="/tags/授权方式/" style="font-size: 13px;">授权方式</a> <a href="/tags/环境变量/" style="font-size: 13px;">环境变量</a> <a href="/tags/研发工具/" style="font-size: 13.25px;">研发工具</a> <a href="/tags/研发管理/" style="font-size: 13.75px;">研发管理</a> <a href="/tags/笔记/" style="font-size: 14px;">笔记</a> <a href="/tags/设计模式/" style="font-size: 13px;">设计模式</a> <a href="/tags/页面嵌入/" style="font-size: 13px;">页面嵌入</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/01/17/命令中的-和/" class="title">&#39;命令中的-和--&#39;</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-01-17T05:56:23.000Z" itemprop="datePublished">2019-01-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/01/14/js探针安装说明/" class="title">js探针安装说明</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-01-14T07:43:35.000Z" itemprop="datePublished">2019-01-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/博客/">博客</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/12/06/图表最终形态/" class="title">图表最终形态</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-12-05T16:00:00.000Z" itemprop="datePublished">2018-12-06</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/web前端/">web前端</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/11/24/web全栈技术图谱v1-1/" class="title">web全栈技术图谱v1.1</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-11-23T16:00:00.000Z" itemprop="datePublished">2018-11-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/笔记/">笔记</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/11/13/ReactiveX-的理念和特点/" class="title">ReactiveX 的理念和特点</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-11-12T16:00:00.000Z" itemprop="datePublished">2018-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-图表分享授权方式" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      图表分享授权方式
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/11/13/图表分享授权方式/" class="article-date">
+	  <time datetime="2018-11-12T16:00:00.000Z" itemprop="datePublished">2018-11-13</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/博客/">博客</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/hexo/">hexo</a>, <a class="article-tag-link" href="/tags/分享/">分享</a>, <a class="article-tag-link" href="/tags/授权方式/">授权方式</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/11/13/图表分享授权方式/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="图表分享授权方式"><a href="#图表分享授权方式" class="headerlink" title="图表分享授权方式"></a>图表分享授权方式</h1><p>网页上的分享一般都提供公开和私有两种分享方式。</p>
+<ol>
+<li><p>公开分享不需要鉴权，只要有URL都可以打开查看。</p>
+</li>
+<li><p>私有分享常见的有两种鉴权方式</p>
+<ol>
+<li>通过密码鉴权 打开页面后输入密码才能看到内容。例如百度网盘分享功能、网易有数的私有分享</li>
+<li>通过token鉴权，通过HMAC算法，，客户端通过以token为key把一些变化的数据（通常是时间戳+一部分传递的数据）按照标准的HAMC算法，以指定的加密算法（SHA256、SHA-3等）计算出一个签名，在服务端通过HMAC算法验证签名是否正确来进行鉴权</li>
+</ol>
+</li>
+</ol>
+<h2 id="公开分享"><a href="#公开分享" class="headerlink" title="公开分享"></a>公开分享</h2><p>公开分享由于有URL都可以查看。查看、传播或者进行嵌入的时候比较方便，但是没有鉴权，比较适合演示数据等公开的分享。</p>
+<h2 id="密码鉴权的私有分享"><a href="#密码鉴权的私有分享" class="headerlink" title="密码鉴权的私有分享"></a>密码鉴权的私有分享</h2><p>密码鉴权的私有分享安全性比较适中，查看需要输入密码稍微麻烦点，进行传播比较方便，适合一定范围的分享。进行页面嵌入时麻烦一点，需要引入token进行免密登录。比较适合整个页面查看的时候，但是对于我们来说接入友互通之后本身具有这种功能。</p>
+<h2 id="token鉴权的私有分享"><a href="#token鉴权的私有分享" class="headerlink" title="token鉴权的私有分享"></a>token鉴权的私有分享</h2><p>token鉴权的私有分享安全性比较最高，适合页面嵌入，通过部署接口计算签名，获取签名后添加到嵌入页面URL参数中。一般来说验证具有瞬时性，即认证只在当时有效，不适合通过URL直接分享页面查看的情况。</p>
+<h4 id="HMAC简介"><a href="#HMAC简介" class="headerlink" title="HMAC简介"></a>HMAC简介</h4><p>在密码术中，HMAC（有时扩展为密钥散列消息认证码或基于散列的消息认证码）是涉及加密散列函数和秘密加密密钥的特定类型的消息认证码（MAC）。它可以用于同时验证数据完整性和认证一个的消息。任何加密哈希函数，例如SHA256或SHA-3，可用于计算HMAC; 得到的MAC算法称为HMAC-X，其中X是使用的散列函数（例如HMAC-SHA256或HMAC-SHA3）。HMAC的加密强度取决于底层散列函数的加密强度，散列输出的大小以及密钥的大小和质量。</p>
+<p>HMAC使用两次哈希计算。秘密密钥首先用于导出两个密钥 - 内部和外部。算法的第一遍产生从消息和内部密钥派生的内部哈希。第二遍产生从内部哈希结果和外部密钥导出的最终HMAC代码。因此，该算法提供了对更好免疫长度扩展攻击。</p>
+<p>HMAC不加密消息。相反，消息（加密与否）必须与HMAC哈希一起发送。具有秘密密钥的各方将自己再次散列消息，并且如果它是真实的，则接收的和计算的散列将匹配。</p>
+<h4 id="认证流程"><a href="#认证流程" class="headerlink" title="认证流程"></a>认证流程</h4><ol>
+<li>先由客户端向服务器发出一个验证请求。</li>
+<li>服务器接到此请求后生成一个随机数并通过网络传输给客户端。</li>
+<li>客户端将收到的随机数提供给ePass，由ePass使用该随机数与存储在ePass中的密钥进行HMAC-MD5运算并得到一个结果作为认证证据传给服务器（此为响应）。</li>
+<li>与此同时，服务器也使用该随机数与存储在服务器数据库中的该客户密钥进行HMAC-MD5运算，如果服务器的运算结果与客户端传回的响应结果相同，则认为客户端是一个合法用户</li>
+</ol>
+<p>实际实现中前三部可以合为一步，随机数由时间戳代替，通过token（密钥）把参数和时间戳一起进行HASH算法计算的散列值发送给服务端，服务端进行验证。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>综合考虑对于私有分享的图表的鉴权方式以token鉴权方式比较适合。页面分享查看这方面的鉴权友互通可以提供。图表嵌入的通过token方式进行鉴权，安全性高，实现起来也不麻烦，大部分现在编程语言也有提供了相关的工具方法，也有成熟的案例。</p>
+<hr>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ol>
+<li>网易有数分享功能介绍文档<a href="https://youdata.163.com/index/manual/o/5Share_your_analysis_results/4sharelink.html" target="_blank" rel="noopener">https://youdata.163.com/index/manual/o/5Share_your_analysis_results/4sharelink.html</a></li>
+<li>DataV分享功能介绍博客 <a href="https://yq.aliyun.com/articles/498033" target="_blank" rel="noopener">https://yq.aliyun.com/articles/498033</a></li>
+<li>HMAC介绍 <a href="https://en.wikipedia.org/wiki/HMAC" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/HMAC</a></li>
+<li>JavaScript library of crypto standards <a href="https://www.npmjs.com/package/crypto-js" target="_blank" rel="noopener">https://www.npmjs.com/package/crypto-js</a></li>
+<li>nodejs crypto <a href="http://nodejs.cn/api/crypto.html#crypto_crypto_createhmac_algorithm_key_options" target="_blank" rel="noopener">http://nodejs.cn/api/crypto.html#crypto_crypto_createhmac_algorithm_key_options</a></li>
+<li>java javax.crypto <a href="https://docs.oracle.com/javase/7/docs/api/javax/crypto/package-summary.html" target="_blank" rel="noopener">https://docs.oracle.com/javase/7/docs/api/javax/crypto/package-summary.html</a></li>
+<li>C# System.Security.Cryptography<br><a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.hmacsha256?view=netframework-4.7.2" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.hmacsha256?view=netframework-4.7.2</a></li>
+</ol>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://youyunyin.com/2018/11/13/图表分享授权方式/" title="图表分享授权方式" target="_blank" rel="external">http://youyunyin.com/2018/11/13/图表分享授权方式/</a>
+    </li>
+    
+    
+      <li class="post-copyright-license">
+        <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+      </li>
+    
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://www.youyunyin.com" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://www.youyunyin.com" target="_blank"><span class="text-dark">友云音FED</span><small class="ml-1x">用友APM友云音前端技术团队</small></a></h3>
+        <div>用友APM友云音前端技术团队</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      
+
+    
+   
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2018/11/13/ReactiveX-的理念和特点/" title="ReactiveX 的理念和特点"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2018/11/02/页面嵌入方式对比分析/" title="页面嵌入方式对比分析"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,wechat" data-mobile-sites="weibo,wechat"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/youyunyin" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 youyunyin
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> -->
+<!-- <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+    window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+    <!-- <link href="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css" rel="stylesheet"> -->
+    <!-- <script src="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js"></script> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.js"></script>
+    <script>
+        //利用 FancyBox 实现点击图片放大
+        $(document).ready(function() {
+            $('article img').not('[hidden]').not('.panel-body img').each(function () {
+                var $image = $(this);
+                var imageCaption = $image.attr('alt');
+                var $imageWrapLink = $image.parent('a');
+                if ($imageWrapLink.length < 1) {
+                var src = this.getAttribute('src');
+                var idx = src.lastIndexOf('?');
+                if (idx != -1) {
+                    src = src.substring(0, idx);
+                }
+                $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+                }
+                $imageWrapLink.attr('data-fancybox', 'images');
+                if (imageCaption) {
+                $imageWrapLink.attr('data-caption', imageCaption);
+                }
+            });
+            $().fancybox({
+                selector: '[data-fancybox="images"]',
+                hash: false,
+                loop: false,
+            }); 
+        });
+    </script>
+    
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+
+
+    
+    
+        
+    
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js"></script>
+    <script type="text/javascript">
+        var gitalk = new Gitalk({
+            clientID: 'c7ebd7a808368f59044a',
+            clientSecret: 'c6d704f7a1e8a0b237f3ace7fda18801d8ab8d39',
+            repo: 'youyunyin.github.io',
+            owner: 'youyunyin',
+            admin: ['youyunyin'],
+            id: md5(location.pathname),
+            distractionFreeMode: true
+        })
+        gitalk.render('comments')
+    </script>
+    
+
+    
+    
+
+
+
+</body>
+</html>
